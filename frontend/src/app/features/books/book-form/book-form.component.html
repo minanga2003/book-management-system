@@ -1,0 +1,55 @@
+<div class="book-form">
+  <header class="book-form__header">
+    <h2>{{ isEdit() ? 'Edit Book' : 'Add Book' }}</h2>
+    <a class="btn btn--secondary" routerLink="/">Back to list</a>
+  </header>
+
+  @if (loading()) {
+    <p class="book-form__loading">Loading…</p>
+  } @else {
+    @if (error()) {
+      <div class="book-form__error">{{ error() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="book-form__form">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" type="text" formControlName="title" class="form-control" placeholder="Book title" />
+        @if (form.controls.title.invalid && form.controls.title.touched) {
+          <span class="form-error">Title is required (max 500 characters).</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="author">Author Name</label>
+        <input id="author" type="text" formControlName="author" class="form-control" placeholder="Author name" />
+        @if (form.controls.author.invalid && form.controls.author.touched) {
+          <span class="form-error">Author name is required, letters only (max 200 characters).</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="isbn">ISBN Number</label>
+        <input id="isbn" type="text" formControlName="isbn" class="form-control" placeholder="e.g. 978-3-16-148410-0" />
+        @if (form.controls.isbn.invalid && form.controls.isbn.touched) {
+          <span class="form-error">ISBN number is required (max 20 characters).</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="publicationDate">Publication Date</label>
+        <input id="publicationDate" type="date" formControlName="publicationDate" class="form-control" />
+        @if (form.controls.publicationDate.invalid && form.controls.publicationDate.touched) {
+          <span class="form-error">Publication date is required.</span>
+        }
+      </div>
+
+      <div class="book-form__actions">
+        <button type="submit" class="btn btn--primary" [disabled]="form.invalid || submitting()">
+          {{ submitting() ? 'Saving…' : (isEdit() ? 'Update Book' : 'Add Book') }}
+        </button>
+        <a class="btn btn--secondary" routerLink="/">Cancel</a>
+      </div>
+    </form>
+  }
+</div>

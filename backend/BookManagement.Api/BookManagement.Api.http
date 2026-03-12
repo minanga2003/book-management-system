@@ -1,0 +1,34 @@
+@BookManagement.Api_HostAddress = http://localhost:5084
+
+### Get all books
+GET {{BookManagement.Api_HostAddress}}/api/books
+Accept: application/json
+
+### Get book by ID
+GET {{BookManagement.Api_HostAddress}}/api/books/1
+Accept: application/json
+
+### Create a book
+POST {{BookManagement.Api_HostAddress}}/api/books
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "isbn": "978-0132350884",
+  "publicationDate": "2008-08-01"
+}
+
+### Update a book
+PUT {{BookManagement.Api_HostAddress}}/api/books/1
+Content-Type: application/json
+
+{
+  "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+  "author": "Robert C. Martin",
+  "isbn": "978-0132350884",
+  "publicationDate": "2008-08-01"
+}
+
+### Delete a book
+DELETE {{BookManagement.Api_HostAddress}}/api/books/1

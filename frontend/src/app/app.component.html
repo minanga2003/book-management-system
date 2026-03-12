@@ -1,0 +1,36 @@
+<div class="surface-shell">
+  <div class="surface-shell__inner">
+    <div class="surface-shell__inner-content app-layout">
+      <header class="app-header">
+        <div class="app-header__brand">
+          <div class="app-header__logo">
+            <span class="app-header__logo-mark">B</span>
+          </div>
+          <div class="app-header__titles">
+            <h1 class="app-header__title">{{ title }}</h1>
+            <p class="app-header__subtitle">A calm little home for your library.</p>
+          </div>
+        </div>
+
+        <nav class="app-header__nav">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Book list
+          </a>
+          <a routerLink="/books/new" routerLinkActive="active">
+            Add book
+          </a>
+        </nav>
+      </header>
+
+      <main class="app-main subtle-scroll">
+        <section class="app-main__card glass-card">
+          <router-outlet></router-outlet>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>

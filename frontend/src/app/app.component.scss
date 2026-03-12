@@ -1,0 +1,129 @@
+.app-layout {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.8rem 2rem;
+  gap: 1.6rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.32), transparent 55%),
+    radial-gradient(circle at 120% 0%, rgba(236, 72, 153, 0.22), transparent 55%),
+    rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(18px);
+  color: #e5e7eb;
+  flex-wrap: wrap;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-header__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: radial-gradient(circle at 0% 0%, #bfdbfe, #1d4ed8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 30px rgba(59, 130, 246, 0.9);
+}
+
+.app-header__logo-mark {
+  font-family: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0b1120;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.app-header__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.app-header__title {
+  margin: 0;
+  font-family: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.app-header__subtitle {
+  margin: 0;
+  font-size: 0.83rem;
+  color: rgba(209, 213, 219, 0.95);
+}
+
+.app-header__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.16rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+}
+
+.app-header__nav a {
+  position: relative;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(226, 232, 240, 0.8);
+  overflow: hidden;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.app-header__nav a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(248, 250, 252, 0.32), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.app-header__nav a:hover::before {
+  opacity: 1;
+}
+
+.app-header__nav a:hover {
+  color: #f9fafb;
+}
+
+.app-header__nav a.active {
+  background: rgba(15, 23, 42, 0.95);
+  color: #f9fafb;
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.9),
+    0 14px 32px rgba(15, 23, 42, 0.9);
+}
+
+.app-main {
+  flex: 1;
+  max-height: calc(100vh - 180px);
+  overflow: auto;
+}
+
+.app-main__card {
+  padding: 1.4rem 1.5rem 1.6rem;
+}

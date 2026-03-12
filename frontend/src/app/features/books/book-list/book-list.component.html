@@ -1,0 +1,67 @@
+<div class="book-list">
+  <header class="book-list__header">
+    <h2>Books</h2>
+    <a class="btn btn--primary" routerLink="/books/new">Add Book</a>
+  </header>
+
+  @if (loading()) {
+    <p class="book-list__loading">Loading books…</p>
+  } @else if (error()) {
+    <div class="book-list__error">
+      <p>{{ error() }}</p>
+      <button type="button" class="btn btn--secondary" (click)="loadBooks()">Retry</button>
+    </div>
+  } @else if (!hasBooks()) {
+    <p class="book-list__empty">No books yet. <a routerLink="/books/new">Add your first book</a>.</p>
+  } @else {
+    <div class="book-list__table-wrapper">
+      <table class="book-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author Name</th>
+            <th>ISBN Number</th>
+            <th>Publication Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (book of books(); track book.Id) {
+            <tr>
+              <td>{{ book.Title }}</td>
+              <td>{{ book.Author }}</td>
+              <td>{{ book.Isbn }}</td>
+              <td>{{ book.PublicationDate }}</td>
+              <td class="book-table__actions">
+                <a
+                  [routerLink]="['/books', book.Id, 'edit']"
+                  class="btn btn--small btn--secondary btn--icon"
+                  aria-label="Edit book"
+                  title="Edit book"
+                >
+                  <span class="material-icon">edit</span>
+                  <span class="book-table__action-label">Edit</span>
+                </a>
+                <button
+                  type="button"
+                  class="btn btn--small btn--danger btn--icon"
+                  [disabled]="isDeleting(book.Id)"
+                  [attr.aria-label]="isDeleting(book.Id) ? 'Deleting book' : 'Delete book'"
+                  [attr.title]="isDeleting(book.Id) ? 'Deleting…' : 'Delete book'"
+                  (click)="deleteBook(book)"
+                >
+                  <span class="material-icon">
+                    {{ isDeleting(book.Id) ? 'hourglass_top' : 'delete' }}
+                  </span>
+                  <span class="book-table__action-label">
+                    {{ isDeleting(book.Id) ? 'Deleting…' : 'Delete' }}
+                  </span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
