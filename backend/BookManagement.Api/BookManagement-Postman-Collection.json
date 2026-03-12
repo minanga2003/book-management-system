@@ -1,0 +1,87 @@
+{
+  "info": {
+    "name": "Book Management API",
+    "description": "REST API for managing books",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:7122"
+    },
+    {
+      "key": "bookId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/books",
+            "description": "Returns all books."
+          }
+        },
+        {
+          "name": "Get Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/books/{{bookId}}",
+            "description": "Returns a single book by ID. 404 if not found."
+          }
+        },
+        {
+          "name": "Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Title\": \"Clean Code\",\n  \"Author\": \"Robert C. Martin\",\n  \"Isbn\": \"978-0132350884\",\n  \"PublicationDate\": \"2008-08-01\"\n}"
+            },
+            "url": "{{baseUrl}}/api/books",
+            "description": "Creates a new book. Returns 201 with the created book."
+          }
+        },
+        {
+          "name": "Update Book",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Title\": \"Clean Code (Updated)\",\n  \"Author\": \"Robert C. Martin\",\n  \"Isbn\": \"978-0132350884\",\n  \"PublicationDate\": \"2008-08-01\"\n}"
+            },
+            "url": "{{baseUrl}}/api/books/{{bookId}}",
+            "description": "Updates an existing book. All fields are optional. 404 if not found."
+          }
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/books/{{bookId}}",
+            "description": "Deletes a book. Returns 204 on success, 404 if not found."
+          }
+        }
+      ]
+    }
+  ]
+}
