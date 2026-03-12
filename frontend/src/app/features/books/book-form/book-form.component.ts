@@ -30,6 +30,16 @@ export class BookFormComponent implements OnInit {
     publicationDate: ['', Validators.required],
   });
 
+  openPublicationDatePicker(input: HTMLInputElement): void {
+    const anyInput = input as HTMLInputElement & { showPicker?: () => void };
+    if (typeof anyInput.showPicker === 'function') {
+      anyInput.showPicker();
+    } else {
+      input.focus();
+      input.click();
+    }
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -79,7 +89,7 @@ export class BookFormComponent implements OnInit {
       this.bookService.update(id, payload).subscribe({
         next: () => {
           this.submitting.set(false);
-          this.router.navigate(['/']);
+          this.router.navigate(['/'], { queryParams: { updated: 1 } });
         },
         error: (err: Error) => {
           this.error.set(err.message ?? 'Failed to update book');
@@ -90,7 +100,7 @@ export class BookFormComponent implements OnInit {
       this.bookService.create(payload).subscribe({
         next: () => {
           this.submitting.set(false);
-          this.router.navigate(['/']);
+          this.router.navigate(['/'], { queryParams: { created: 1 } });
         },
         error: (err: Error) => {
           this.error.set(err.message ?? 'Failed to create book');

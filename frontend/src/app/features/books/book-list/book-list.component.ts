@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { BookService } from '../../../services/book.service';
 import type { Book } from '../../../models/book.model';
 
@@ -12,16 +12,26 @@ import type { Book } from '../../../models/book.model';
 })
 export class BookListComponent implements OnInit {
   private readonly bookService = inject(BookService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly books = signal<Book[]>([]);
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
+  readonly success = signal<string | null>(null);
   readonly deletingId = signal<number | null>(null);
+  readonly confirmDeleteBookSignal = signal<Book | null>(null);
+  private successTimeoutId: number | null = null;
 
   readonly hasBooks = computed(() => this.books().length > 0);
 
   ngOnInit(): void {
     this.loadBooks();
+    const qp = this.route.snapshot.queryParamMap;
+    if (qp.get('updated') === '1') {
+      this.setSuccess('Book updated successfully.');
+    } else if (qp.get('created') === '1') {
+      this.setSuccess('Book added successfully.');
+    }
   }
 
   loadBooks(): void {
@@ -39,12 +49,26 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  deleteBook(book: Book): void {
-    if (!confirm(`Delete "${book.Title}" by ${book.Author}?`)) return;
+  askDelete(book: Book): void {
+    this.error.set(null);
+    this.clearSuccess();
+    this.confirmDeleteBookSignal.set(book);
+  }
+
+  cancelDelete(): void {
+    this.confirmDeleteBookSignal.set(null);
+  }
+
+  confirmDelete(): void {
+    const book = this.confirmDeleteBookSignal();
+    if (!book) return;
+
+    this.confirmDeleteBookSignal.set(null);
     this.deletingId.set(book.Id);
     this.bookService.delete(book.Id).subscribe({
       next: () => {
         this.books.update((list) => list.filter((b) => b.Id !== book.Id));
+        this.setSuccess(`"${book.Title}" deleted successfully.`);
         this.deletingId.set(null);
       },
       error: (err: Error) => {
@@ -56,5 +80,24 @@ export class BookListComponent implements OnInit {
 
   isDeleting(id: number): boolean {
     return this.deletingId() === id;
+  }
+
+  private setSuccess(message: string): void {
+    this.success.set(message);
+    if (this.successTimeoutId !== null) {
+      window.clearTimeout(this.successTimeoutId);
+    }
+    this.successTimeoutId = window.setTimeout(() => {
+      this.success.set(null);
+      this.successTimeoutId = null;
+    }, 2000);
+  }
+
+  private clearSuccess(): void {
+    this.success.set(null);
+    if (this.successTimeoutId !== null) {
+      window.clearTimeout(this.successTimeoutId);
+      this.successTimeoutId = null;
+    }
   }
 }

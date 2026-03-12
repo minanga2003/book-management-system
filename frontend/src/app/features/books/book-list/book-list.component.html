@@ -4,6 +4,33 @@
     <a class="btn btn--primary" routerLink="/books/new">Add Book</a>
   </header>
 
+  @if (confirmDeleteBookSignal()) {
+    <div class="book-list__confirm-backdrop">
+      <div class="book-list__confirm-dialog glass-card">
+        <h3>Delete book?</h3>
+        <p>
+          Are you sure you want to delete
+          <strong>"{{ confirmDeleteBookSignal()?.Title }}"</strong> by
+          <strong>{{ confirmDeleteBookSignal()?.Author }}</strong>?
+        </p>
+        <div class="book-list__confirm-actions">
+          <button type="button" class="btn btn--secondary" (click)="cancelDelete()">
+            Cancel
+          </button>
+          <button type="button" class="btn btn--danger" (click)="confirmDelete()">
+            Yes, delete
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (success()) {
+    <div class="book-list__success">
+      {{ success() }}
+    </div>
+  }
+
   @if (loading()) {
     <p class="book-list__loading">Loading books…</p>
   } @else if (error()) {
@@ -48,7 +75,7 @@
                   [disabled]="isDeleting(book.Id)"
                   [attr.aria-label]="isDeleting(book.Id) ? 'Deleting book' : 'Delete book'"
                   [attr.title]="isDeleting(book.Id) ? 'Deleting…' : 'Delete book'"
-                  (click)="deleteBook(book)"
+                  (click)="askDelete(book)"
                 >
                   <span class="material-icon">
                     {{ isDeleting(book.Id) ? 'hourglass_top' : 'delete' }}
