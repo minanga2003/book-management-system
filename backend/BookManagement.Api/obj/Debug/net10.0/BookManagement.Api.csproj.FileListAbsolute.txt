@@ -32,3 +32,4 @@
 /Users/yuthmiminanga/book-management-system/backend/BookManagement.Api/obj/Debug/net10.0/BookManagement.Api.genruntimeconfig.cache
 /Users/yuthmiminanga/book-management-system/backend/BookManagement.Api/obj/Debug/net10.0/ref/BookManagement.Api.dll
 /Users/yuthmiminanga/book-management-system/backend/BookManagement.Api/obj/Debug/net10.0/BookManagement.Api.sourcelink.json
+/Users/yuthmiminanga/book-management-system/backend/BookManagement.Api/bin/Debug/net10.0/BookManagement-Postman-Collection.json
